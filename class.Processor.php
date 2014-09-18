@@ -18,7 +18,9 @@
 		
 		public static function evalFile($sFile, $aContextVariables=[], $bFlushBuffer=true) {
 			if (file_exists($sFile)) {
-				return self::evalString(file_get_contents($sFile), $aContextVariables, $bFlushBuffer);
+				$_ENV['LAST_EVALED_FILE'] = $sFile;
+				$s = self::evalString(file_get_contents($sFile), $aContextVariables, $bFlushBuffer);
+				return $s;
 			} else {
 				throw new Exception("File $sFile does not exist");
 			}

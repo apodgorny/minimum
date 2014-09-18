@@ -1,6 +1,20 @@
 <?
 
 	class Minimum {
+		public static function realpath($sPath) {
+			$sPrefix = ($sPath[0] === '/') ? '/' : '';
+			$a     = explode('/', trim($sPath, '/'));
+			$aOut  = [];
+			
+			foreach($a as $s){
+				if ($s != '.' && !empty($s)) {
+					if ($s == '..') { array_pop($aOut);      }
+					else            { array_push($aOut, $s); }
+				}
+			}
+			return $sPrefix . implode('/', $aOut);
+		}
+		
 		public static function __callStatic($sMethod, $aParams=[]) {
 			$sMethod = strtoupper($sMethod);
 			if (isset($_ENV['SETTINGS'][$sMethod])) {
@@ -14,10 +28,10 @@
 		}
 		
 		public static function path($sPath) {
-			return implode(DIRECTORY_SEPARATOR, array_merge(
+			return self::realpath(implode(DIRECTORY_SEPARATOR, array_merge(
 				explode(DIRECTORY_SEPARATOR, getCwd()),
 				explode(DIRECTORY_SEPARATOR, $sPath)
-			));
+			)));
 		}
 	}
 
