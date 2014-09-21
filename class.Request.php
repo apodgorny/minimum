@@ -21,16 +21,17 @@
 					}
 				}
 			} else {
-				if (isset($_REQUEST[$sParamName]) && $_REQUEST[$sParamName]) {
+				if (isset($_REQUEST[$sParamName])) {
 					$sParam = trim($_REQUEST[$sParamName]);
+					
+					if ($sParam === '' && $bRequired) {
+						throw new Exception("Parameter \"$sParamName\" is empty");
+					}
+					
 					$mParam = json_decode($sParam, true);
 					
 					if (!$mParam && strlen($sParam) > 0) {
 						$mParam = $sParam;
-					}
-				
-					if ($bRequired && !$mParam) {
-						throw new Exception("Parameter \"$sParamName\" is empty");
 					}
 				
 					return $mParam;

@@ -21,7 +21,7 @@
 			
 			foreach ($this->routes as $sKey=>$sMethod) {
 				if (preg_match('~' . $sKey . '~', $sPath)) {
-					// debug(get_class($this)." -> $sMethod() [$sPath => $sKey]");
+					debug(get_class($this)." -> $sMethod() [$sPath => $sKey]");
 					if ($sMethod[0] == '#') {
 						$sMethod = substr($sMethod, 1);
 						if (class_exists($sMethod)) {
@@ -38,7 +38,7 @@
 					}
 				}
 			}
-			// debug(get_class($this)." -> NO MATCH");
+			debug(get_class($this)." -> NO MATCH");
 			return false;
 		}
 	}
