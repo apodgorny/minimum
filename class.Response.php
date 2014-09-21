@@ -69,7 +69,7 @@
 				$sHtml = preg_replace('/<\/head>/i', "\n<style>\n$sCssToInject\n</style>\n</head>", $sHtml);
 			}
 			if ($sScriptToInject) {
-				$sHtml = preg_replace('/<\/head>/i', "\n<script>\n$sScriptToInject\n</script>\n</head>", $sHtml);
+				$sHtml = preg_replace('/<\/body>/i', "\n<script>\n$sScriptToInject\n</script>\n</body>", $sHtml);
 			}
 			self::setContentType('text/html');
 			self::send($sHtml, $bEval);
