@@ -1,6 +1,6 @@
 <?
 
-	class Template {
+	class T {
 		
 		/**************** PRIVATE ****************/
 		
@@ -8,9 +8,9 @@
 		private static $_aCss = [];
 		
 		private static function _findJsFile($sTemplate) {
-			if ($aDirs = Minimum::TEMPLATE_JS()) {
+			if ($aDirs = M::TEMPLATE_JS()) {
 				foreach ($aDirs as $sDir) {
-					$sPath = Minimum::PROJECT_PATH() . '/' . $sDir . '/tpl.' . $sTemplate . '.js';
+					$sPath = M::PROJECT_PATH() . '/' . $sDir . '/tpl.' . $sTemplate . '.js';
 					if (file_exists($sPath)) {
 						self::$_aJs[$sTemplate] = $sPath;
 						return;
@@ -20,9 +20,9 @@
 		}
 		
 		private static function _findCssFile($sTemplate) {
-			if ($aDirs = Minimum::TEMPLATE_CSS()) {
+			if ($aDirs = M::TEMPLATE_CSS()) {
 				foreach ($aDirs as $sDir) {
-					$sPath = Minimum::PROJECT_PATH() . '/' . $sDir . '/tpl.' . $sTemplate . '.css';
+					$sPath = M::PROJECT_PATH() . '/' . $sDir . '/tpl.' . $sTemplate . '.css';
 					if (file_exists($sPath)) {
 						self::$_aCss[$sTemplate] = $sPath;
 						return;
@@ -33,14 +33,15 @@
 		
 		/**************** PUBLIC ****************/
 		
-		public static function get($sTemplate, $aParams) {
-			if ($aDirs = Minimum::TEMPLATE_PHP()) {
+		public static function __callStatic($sTemplate, $aArgs) {
+			if ($aDirs = M::TEMPLATE_PHP()) {
 				foreach ($aDirs as $sDir) {
-					$sPath = Minimum::PROJECT_PATH() . '/' . $sDir . '/tpl.' . $sTemplate . '.php';
+					$sPath = M::PROJECT_PATH() . '/' . $sDir . '/tpl.' . $sTemplate . '.php';
 					if (file_exists($sPath)) {
 						self::_findJsFile($sTemplate);
 						self::_findCssFile($sTemplate);
-						return Processor::evalString(file_get_contents($sPath), $aParams);
+						print Processor::evalString(file_get_contents($sPath), $aArgs[0]);
+						return;
 					}
 				}
 			}

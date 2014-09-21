@@ -25,10 +25,10 @@
 		public static function connect($sDb=null, $sHost=null, $sUser=null, $sPass=null) {
 			self::disconnect();
 			
-			$sHost = $sHost ? $sHost : Minimum::DB_HOST();
-			$sUser = $sUser ? $sUser : Minimum::DB_USER();
-			$sPass = $sPass ? $sPass : Minimum::DB_PASSWORD();
-			$sDb   = $sDb   ? $sDb   : Minimum::DB_NAME();
+			$sHost = $sHost ? $sHost : M::DB_HOST();
+			$sUser = $sUser ? $sUser : M::DB_USER();
+			$sPass = $sPass ? $sPass : M::DB_PASSWORD();
+			$sDb   = $sDb   ? $sDb   : M::DB_NAME();
 
 			self::$_oDb = new mysqli($sHost, $sUser, $sPass, $sDb);
 			

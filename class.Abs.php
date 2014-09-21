@@ -56,11 +56,11 @@
 			if (parse_url($sUrl, PHP_URL_SCHEME) != '') { return $sUrl; }
 
 			/* queries and anchors */
-			if ($sUrl[0]=='#' || $sUrl[0]=='?') { return Minimum::SITE_ROOT().$sUrl; }
+			if ($sUrl[0]=='#' || $sUrl[0]=='?') { return M::SITE_ROOT().$sUrl; }
 
 			/* parse base URL and convert to local variables:
 			$scheme, $host, $path */
-			extract(parse_url(Minimum::SITE_ROOT()));
+			extract(parse_url(M::SITE_ROOT()));
 
 			/* remove non-directory element from path */
 			//$path = preg_replace('#/[^/]*$#', '', $path);

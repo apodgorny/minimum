@@ -5,7 +5,7 @@
 		/******************* PUBLIC *******************/
 		
 		public static function path() {
-			return Minimum::REQUEST_PATH();
+			return M::REQUEST_PATH();
 		}
 		
 		public static function param($sParamName, $bRequired=true) {

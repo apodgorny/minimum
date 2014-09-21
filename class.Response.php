@@ -29,7 +29,7 @@
 					$bEval = false;
 				}
 			}
-			$sFileName = Minimum::path($sFileName);
+			$sFileName = M::path($sFileName);
 			if (file_exists($sFileName)) {
 				// debug('Sending '.$sFileName);
 				return self::send(file_get_contents($sFileName), $bEval);
@@ -56,8 +56,8 @@
 				self::setHeader('Pragma', 'no-cache');
 				self::setHeader('Expires', '-1');
 				$sEvaledTemplate = Processor::evalFile($sFileName, $aContext, false);
-				$sScriptToInject .= Template::getJs();
-				$sCssToInject    .= Template::getCss();
+				$sScriptToInject .= T::getJs();
+				$sCssToInject    .= T::getCss();
 				return self::sendHtml($sEvaledTemplate, $sScriptToInject, $sCssToInject, false);
 			} else {
 				throw new Exception("Error: file $sFileName does not exist", 404);
@@ -123,7 +123,7 @@
 		public static function redirectTo($sUrl) {
 			self::$_bReadyToSend = true;
 			if ($sUrl[0] == '/') {
-				$sUrl = Minimum::SITE_PATH() . $sUrl;
+				$sUrl = M::SITE_PATH() . $sUrl;
 			}
 			debug('Redirecting to '.$sUrl);
 			self::setHeader('HTTP/1.1 301 Moved Permanently'); 
@@ -132,11 +132,11 @@
 		}
 		
 		public static function redirectToHttp() {
-			self::redirectTo(Minimum::HTTP_ROOT() . Minimum::request_path());
+			self::redirectTo(M::HTTP_ROOT() . M::request_path());
 		}
 
 		public static function redirectToHttps() {
-			self::redirectTo(Minimum::HTTPS_ROOT() . Minimum::request_path());
+			self::redirectTo(M::HTTPS_ROOT() . M::request_path());
 		}
 	}
 
