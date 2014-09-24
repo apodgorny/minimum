@@ -21,17 +21,16 @@
 					}
 				}
 			} else {
-				if (isset($_REQUEST[$sParamName])) {
+				if (isset($_REQUEST[$sParamName]) && $_REQUEST[$sParamName]) {
 					$sParam = trim($_REQUEST[$sParamName]);
-					
-					if ($sParam === '' && $bRequired) {
-						throw new Exception("Parameter \"$sParamName\" is empty");
-					}
-					
 					$mParam = json_decode($sParam, true);
 					
 					if (!$mParam && strlen($sParam) > 0) {
 						$mParam = $sParam;
+					}
+				
+					if ($bRequired && !$mParam) {
+						throw new Exception("Parameter \"$sParamName\" is empty");
 					}
 				
 					return $mParam;
@@ -55,6 +54,12 @@
 			$sHost     = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : null;
 			$sHost     = $sHost ? $sHost : $_SERVER['SERVER_NAME'] . $nPort;
 			return $sProtocol . '://' . $sHost . $_SERVER['REQUEST_URI'];
+		}
+		
+		public static function isHttps() {
+			return 
+				(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || 
+				(isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
 		}
 	}
 

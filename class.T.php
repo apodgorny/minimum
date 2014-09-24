@@ -10,7 +10,7 @@
 		private static function _findJsFile($sTemplate) {
 			if ($aDirs = M::TEMPLATE_JS()) {
 				foreach ($aDirs as $sDir) {
-					$sPath = M::PROJECT_PATH() . '/' . $sDir . '/tpl.' . $sTemplate . '.js';
+					$sPath = M::PROJECT_ROOT() . '/' . $sDir . '/tpl.' . $sTemplate . '.js';
 					if (file_exists($sPath)) {
 						self::$_aJs[$sTemplate] = $sPath;
 						return;
@@ -22,7 +22,7 @@
 		private static function _findCssFile($sTemplate) {
 			if ($aDirs = M::TEMPLATE_CSS()) {
 				foreach ($aDirs as $sDir) {
-					$sPath = M::PROJECT_PATH() . '/' . $sDir . '/tpl.' . $sTemplate . '.css';
+					$sPath = M::PROJECT_ROOT() . '/' . $sDir . '/tpl.' . $sTemplate . '.css';
 					if (file_exists($sPath)) {
 						self::$_aCss[$sTemplate] = $sPath;
 						return;
@@ -36,7 +36,7 @@
 		public static function __callStatic($sTemplate, $aArgs) {
 			if ($aDirs = M::TEMPLATE_PHP()) {
 				foreach ($aDirs as $sDir) {
-					$sPath = M::PROJECT_PATH() . '/' . $sDir . '/tpl.' . $sTemplate . '.php';
+					$sPath = M::PROJECT_ROOT() . '/' . $sDir . '/tpl.' . $sTemplate . '.php';
 					if (file_exists($sPath)) {
 						self::_findJsFile($sTemplate);
 						self::_findCssFile($sTemplate);

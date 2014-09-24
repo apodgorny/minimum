@@ -50,14 +50,12 @@
 			}
 		}
 		
-		public static function sendTemplate($sFileName, $aContext=[], $sScriptToInject='', $sCssToInject='') {
+		public static function sendTemplate($sFileName, $aContext=[], $sScriptToInject=null, $sCssToInject=null) {
 			if (file_exists($sFileName)) {
 				self::setHeader('Cache-Control', 'no-cache');
 				self::setHeader('Pragma', 'no-cache');
 				self::setHeader('Expires', '-1');
 				$sEvaledTemplate = Processor::evalFile($sFileName, $aContext, false);
-				$sScriptToInject .= T::getJs();
-				$sCssToInject    .= T::getCss();
 				return self::sendHtml($sEvaledTemplate, $sScriptToInject, $sCssToInject, false);
 			} else {
 				throw new Exception("Error: file $sFileName does not exist", 404);
@@ -69,7 +67,7 @@
 				$sHtml = preg_replace('/<\/head>/i', "\n<style>\n$sCssToInject\n</style>\n</head>", $sHtml);
 			}
 			if ($sScriptToInject) {
-				$sHtml = preg_replace('/<\/body>/i', "\n<script>\n$sScriptToInject\n</script>\n</body>", $sHtml);
+				$sHtml = preg_replace('/<\/head>/i', "\n<script>\n$sScriptToInject\n</script>\n</head>", $sHtml);
 			}
 			self::setContentType('text/html');
 			self::send($sHtml, $bEval);
@@ -123,7 +121,7 @@
 		public static function redirectTo($sUrl) {
 			self::$_bReadyToSend = true;
 			if ($sUrl[0] == '/') {
-				$sUrl = M::SITE_PATH() . $sUrl;
+				$sUrl = M::SITE_ROOT() . $sUrl;
 			}
 			debug('Redirecting to '.$sUrl);
 			self::setHeader('HTTP/1.1 301 Moved Permanently'); 
