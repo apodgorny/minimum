@@ -6,7 +6,7 @@ __PHP_BEGIN__
 	// Add settings specific for host to $_ENV['HOST_SETTINGS'] here.
 
 	$_ENV['HOST_SETTINGS'] = [
-		'PRODUCTION'   => false,                                   // development or production?
+		'PRODUCTION'   => <?= self::$PRODUCTION ? 'true' : 'false' ?>,                              // development or production?
 		'SITE_PATH'    => '<?= $sSitePath ?>',                                // folder above hostname (if any) in url where project is rooted
 		'PROJECT_ROOT' => '<?= $sProjectRoot ?>',  //
 		
