@@ -153,7 +153,7 @@
 	
 	/********************************************************/
 	
-	if (!preg_match('/\.(js|css|gif|png|jpg|jpeg|ico|woff)$/', Request::path())) {
+	if (!preg_match('/\.(css|gif|png|jpg|jpeg|ico|woff)$/', Request::path())) {
 		debug(str_pad('------ '.Request::path().' ----', 80, '-').microtime(true).'---');
 	}
 	

@@ -5,6 +5,7 @@
 		public static $DOCUMENT_ROOT = null;
 		public static $PROJECT_ROOT  = null;
 		public static $SITE_PATH     = null;
+		public static $HOST          = 'localhost';
 		
 		public static $aDirectories = [
 			'../classes',
@@ -42,6 +43,10 @@
 			
 			if (!isset($argv[2])) {
 				die('Please (1 or 0) as second parameter to specify if environment is production' . PHP_EOL);
+			}
+			
+			if (isset($argv[3])) {
+				self::$HOST = $argv[3];
 			}
 
 			self::$PRODUCTION    = (bool)$argv[2];

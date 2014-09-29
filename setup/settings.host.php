@@ -7,6 +7,7 @@ __PHP_BEGIN__
 
 	$_ENV['HOST_SETTINGS'] = [
 		'PRODUCTION'   => <?= self::$PRODUCTION ? 'true' : 'false' ?>,                              // development or production?
+		'HOST'         => '<?= self::$HOST ?>',
 		'SITE_PATH'    => '<?= self::$SITE_PATH ?>',                                // folder above hostname (if any) in url where project is rooted
 		'PROJECT_ROOT' => '<?= self::$PROJECT_ROOT ?>',  //
 		
