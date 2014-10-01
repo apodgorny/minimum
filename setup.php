@@ -30,6 +30,7 @@
 			'class.HttpsService'    => ['path' => '../services/class.HttpsService.php',  'mode' => 0664],
 			'class.ErrorService'    => ['path' => '../services/class.ErrorService.php',  'mode' => 0664],
 			'class.SampleService'   => ['path' => '../services/class.SampleService.php', 'mode' => 0664],
+			'gitignore3'            => ['path' => '../../client/images/.gitignore',      'mode' => 0664]
 		];
 		
 		public static function acceptParameters() {
