@@ -12,7 +12,8 @@
 			'../logic',
 			'../logs',
 			'../services',
-			'../../client'
+			'../../client',
+			'../../client/images'
 		];
 
 		public static $aFiles = [
