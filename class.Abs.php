@@ -5,6 +5,7 @@
 
 	class Abs {
 		public static function absolutizeUrl($sBaseUrl, $sUrl) {
+			$sUrl = str_replace('&amp;', '&', $sUrl);
 			return url_to_absolute($sBaseUrl, $sUrl);
 		}
 		
@@ -31,7 +32,7 @@
 			foreach ($aTags as $oTag) {
 				$oTag->href = self::absolutizeUrl($sBaseUrl, $oTag->href);
 			}
-			
+
 			// Parse url() in inline css
 			$aTags = $oHtml->find('style');
 			foreach ($aTags as $oTag) {
@@ -63,7 +64,7 @@
 			extract(parse_url(M::SITE_ROOT()));
 
 			/* remove non-directory element from path */
-			//$path = preg_replace('#/[^/]*$#', '', $path);
+			// $path = preg_replace('#/[^/]*$#', '', $path);
 
 			/* destroy path if relative url points to root */
 			//if ($sUrl[0] == '/') { $path = ''; }

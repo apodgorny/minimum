@@ -63,7 +63,7 @@ require "join_url.php";
  * 	URLs, or FALSE if the base URL is not absolute or if either
  * 	URL cannot be parsed.
  */
-function url_to_absolute( $baseUrl, $relativeUrl )
+function url_to_absolute( $baseUrl, $relativeUrl, $bEncode = false )
 {
 	// If relative URL has a scheme, clean path and return.
 	$r = split_url( $relativeUrl );
@@ -73,7 +73,7 @@ function url_to_absolute( $baseUrl, $relativeUrl )
 	{
 		if ( !empty( $r['path'] ) && $r['path'][0] == '/' )
 			$r['path'] = url_remove_dot_segments( $r['path'] );
-		return join_url( $r );
+		return join_url( $r, $bEncode );
 	}
 
 	// Make sure the base URL is absolute.
@@ -87,7 +87,7 @@ function url_to_absolute( $baseUrl, $relativeUrl )
 	{
 		if ( !empty( $r['path'] ) )
 			$r['path'] = url_remove_dot_segments( $r['path'] );
-		return join_url( $r );
+		return join_url( $r, $bEncode );
 	}
 	unset( $r['port'] );
 	unset( $r['user'] );
@@ -106,7 +106,7 @@ function url_to_absolute( $baseUrl, $relativeUrl )
 			$r['path'] = $b['path'];
 		if ( !isset( $r['query'] ) && isset( $b['query'] ) )
 			$r['query'] = $b['query'];
-		return join_url( $r );
+		return join_url( $r, $bEncode );
 	}
 
 	// If relative URL path doesn't start with /, merge with base path
@@ -117,7 +117,7 @@ function url_to_absolute( $baseUrl, $relativeUrl )
 		$r['path'] = $base . '/' . $r['path'];
 	}
 	$r['path'] = url_remove_dot_segments( $r['path'] );
-	return join_url( $r );
+	return join_url( $r, $bEncode );
 }
 
 /**
