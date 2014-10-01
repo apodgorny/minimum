@@ -65,6 +65,9 @@
 
 			/* remove non-directory element from path */
 			// $path = preg_replace('#/[^/]*$#', '', $path);
+			if (!isset($scheme)) { $scheme = ''; } else { $scheme = $scheme . ':'; }
+			if (!isset($host))   { $host = ''; }
+			if (!isset($path))   { $path = ''; }
 
 			/* destroy path if relative url points to root */
 			//if ($sUrl[0] == '/') { $path = ''; }
@@ -77,7 +80,7 @@
 			for($n=1; $n>0; $sAbs=preg_replace($aRegex, '/', $sAbs, -1, $n)) {}
 
 			/* absolute URL is ready! */
-			return $scheme.'://'.$sAbs;
+			return $scheme.'//'.$sAbs;
 		}
 	}
 
