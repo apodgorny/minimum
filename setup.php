@@ -6,14 +6,14 @@
 		public static $PROJECT_ROOT  = null;
 		public static $SITE_PATH     = null;
 		public static $HOST          = 'localhost';
+		public static $IMAGES_PATH   = null;
 		
 		public static $aDirectories = [
 			'../classes',
 			'../logic',
 			'../logs',
 			'../services',
-			'../../client',
-			'../../client/images'
+			'../../client'
 		];
 
 		public static $aFiles = [
@@ -29,9 +29,7 @@
 			'class.HttpService'     => ['path' => '../services/class.HttpService.php',   'mode' => 0664],
 			'class.HttpsService'    => ['path' => '../services/class.HttpsService.php',  'mode' => 0664],
 			'class.ErrorService'    => ['path' => '../services/class.ErrorService.php',  'mode' => 0664],
-			'class.SampleService'   => ['path' => '../services/class.SampleService.php', 'mode' => 0664],
-			'gitignore3'            => ['path' => '../../client/images/.gitignore',      'mode' => 0664],
-			'gitignore4'            => ['path' => '../../client/.gitignore',             'mode' => 0664]
+			'class.SampleService'   => ['path' => '../services/class.SampleService.php', 'mode' => 0664]
 		];
 		
 		public static function acceptParameters() {
@@ -48,15 +46,20 @@
 				die('Please (1 or 0) as second parameter to specify if environment is production' . PHP_EOL);
 			}
 			
-			if (isset($argv[3])) {
-				self::$HOST = $argv[3];
+			if (!isset($argv[3])) {
+				die('Please supply path to images folder as third parameter' . PHP_EOL);
+			}
+			
+			if (isset($argv[4])) {
+				self::$HOST = $argv[4];
 			}
 
 			self::$PRODUCTION    = (bool)$argv[2];
 			self::$DOCUMENT_ROOT = realpath($argv[1]);
 			self::$PROJECT_ROOT  = implode('/', array_slice(explode('/', __FILE__), 0, -3));
 			self::$SITE_PATH     = str_replace(self::$DOCUMENT_ROOT, '', self::$PROJECT_ROOT);
-			
+			self::$IMAGES_PATH   = $argv[3];
+			self::$aDirectories[]      = self::$IMAGES_PATH;
 		}
 		
 		public static function createDirectories() {
@@ -72,7 +75,7 @@
 					print ' Exists'.PHP_EOL;
 				}
 			}
-			chmod('../../client/images', 0777);
+			chmod(self::$IMAGES_PATH, 0777);
 		}
 	
 		public static function createFiles() {
