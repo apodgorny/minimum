@@ -72,6 +72,7 @@
 					print ' Exists'.PHP_EOL;
 				}
 			}
+			chmod('../../client/images', 0777);
 		}
 	
 		public static function createFiles() {

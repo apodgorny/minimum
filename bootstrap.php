@@ -101,6 +101,9 @@
 	}
 	
 	function shutdownHandler() {
+		P::mark('END');
+		P::report();
+		
 		if ($aError = error_get_last()) {
 			errorHandler($aError['type'], $aError['message'], $aError['file'], $aError['line']);
 		}
@@ -153,11 +156,13 @@
 	
 	/********************************************************/
 	
-	if (!preg_match('/\.(css|gif|png|jpg|jpeg|ico|woff)$/', Request::path())) {
+	if (!preg_match('/\.(js|css|gif|png|jpg|jpeg|ico|woff)$/', Request::path())) {
 		debug(str_pad('------ '.Request::path().' ----', 80, '-').microtime(true).'---');
 	}
 	
 	/********************************************************/
+	
+	P::mark('START');
 	
 	require_once 'server/start.php';
 	

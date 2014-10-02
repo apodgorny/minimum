@@ -31,6 +31,7 @@
 						}
 					} else if (method_exists($this, $sMethod)) {
 						$bReturn = $this->$sMethod();
+						P::mark(get_class($this) . '::' . $sMethod);
 						Response::end();
 						return $bReturn;
 					} else {
