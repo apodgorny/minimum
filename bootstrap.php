@@ -132,7 +132,7 @@
 			E_USER_DEPRECATED   => 'E_USER_DEPRECATED',
 			E_ALL               => 'E_ALL'
 		];
-		if ($_ENV['LAST_EVALED_FILE'] && strstr($sFileName, 'eval\'d code') !== false) {
+		if ($_ENV['LAST_EVALED_FILE'] && strstr($sFileName, 'eval()\'d code') !== false) {
 			$sFileName = $_ENV['LAST_EVALED_FILE'];
 		}
 		debug('ERROR ' . $aErrorNames[$nCode] . ": $sMessage in $sFileName, on line $nLineNumber");
