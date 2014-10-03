@@ -148,7 +148,15 @@
 			'woff'  => 'application/font-woff'
 		);
 		
-		private static $_aEvaledExtensions = array(
+		private static $_aEvaledExtensionsProd = array(
+			'php',
+			'html',
+			'phtml',
+			'txt',
+			'json'
+		);
+		
+		private static $_aEvaledExtensionsDev = array(
 			'php',
 			'html',
 			'phtml',
@@ -159,7 +167,10 @@
 		);
 		
 		public static function canEval($sExtension) {
-			return in_array($sExtension, self::$_aEvaledExtensions);
+			if (M::PRODUCTION()) {
+				return in_array($sExtension, self::$_aEvaledExtensionsProd);
+			}
+			return in_array($sExtension, self::$_aEvaledExtensionsDev);
 		}
 	
 		public static function guess($sExtension) {

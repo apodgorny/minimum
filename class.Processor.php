@@ -3,11 +3,13 @@
 	class Processor {
 		
 		public static function evalString($s, $aContextVariables=[], $bFlushBuffer=true) {
+			P::mark('EVAL_BEGIN');
 			ob_start();
 			extract($aContextVariables);
 			eval('?>' . $s . '<?');
 			$sResult = ob_get_contents();
 			ob_end_clean();
+			P::mark('EVAL_END');
 			
 			if ($bFlushBuffer) {
 				print $sResult;
