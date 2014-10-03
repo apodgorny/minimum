@@ -18,6 +18,15 @@
 			self::$_aHeaders[$sName] = $sValue;
 		}
 		
+		public static function sendFileAbs($sAbsFilePath, $bEval=false) {
+			if (file_exists($sAbsFilePath)) {
+				return self::send(file_get_contents($sAbsFilePath), $bEval);
+			} else {
+				debug('File does not exist: '.$sAbsFilePath);
+			}
+			return false;
+		}
+		
 		public static function sendFile($sFileName, $bEval=true) {
 			global $MimeTypes;
 			self::$_sCurrentFileName = $sFileName;
@@ -30,13 +39,7 @@
 				}
 			}
 			$sFileName = M::path($sFileName);
-			if (file_exists($sFileName)) {
-				// debug('Sending '.$sFileName);
-				return self::send(file_get_contents($sFileName), $bEval);
-			} else {
-				debug('File does not exist: '.$sFileName);
-			}
-			return false;
+			return self::sendFileAbs($sFileName, $bEval);
 		}
 		
 		public static function sendHtmlFile($sFileName, $sScriptToInject=null, $sCssToInject=null, $bEval=true) {

@@ -20,7 +20,7 @@
 				if ($n < self::$_n-1) {
 					$sKey1 = array_keys(self::$_a)[$n];
 					$sKey2 = array_keys(self::$_a)[$n+1];
-					$aIntervals["$sKey1 -> $sKey2"] = self::$_a[$sKey2] - self::$_a[$sKey1];
+					$aIntervals["$sKey1 -> $sKey2"] = round((self::$_a[$sKey2] - self::$_a[$sKey1]) * 1000, 3) . ' ms';
 					$n ++;
 				} else {
 					break;
