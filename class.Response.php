@@ -8,6 +8,19 @@
 		private static $_sCurrentFileName = '';
 		private static $_bReadyToSend     = false;
 		
+		private static function _sendHeaders() {
+			if (!isset(self::$_aHeaders['Content-Type'])) {
+				self::$_aHeaders['Content-Type'] = 'text/html';
+			}
+			
+			if (self::$_bReadyToSend) {
+				foreach (self::$_aHeaders as $sName=>$sValue) {
+					header("$sName" . ($sValue ? ": $sValue" : ''));
+				}
+			}
+			self::$_aHeaders = [];
+		}
+		
 		/******************* PUBLIC *******************/
 		
 		public static function setContentType($sType) {
@@ -20,7 +33,14 @@
 		
 		public static function sendFileAbs($sAbsFilePath, $bEval=false) {
 			if (file_exists($sAbsFilePath)) {
-				return self::send(file_get_contents($sAbsFilePath), $bEval);
+				if ($bEval) {
+					return self::send(file_get_contents($sAbsFilePath), $bEval);
+				} else {
+					self::$_bReadyToSend = true;
+					self::_sendHeaders();
+					readfile($sAbsFilePath);
+					exit();
+				}
 			} else {
 				debug('File does not exist: '.$sAbsFilePath);
 			}
@@ -39,6 +59,7 @@
 				}
 			}
 			$sFileName = M::path($sFileName);
+			// self::setHeader('Content-Length', filesize($sFileName));
 			return self::sendFileAbs($sFileName, $bEval);
 		}
 		
@@ -104,20 +125,9 @@
 		}
 		
 		public static function end() {
-			if (!isset(self::$_aHeaders['Content-Type'])) {
-				self::$_aHeaders['Content-Type'] = 'text/html';
-			}
-			
-			if (self::$_bReadyToSend) {
-				foreach (self::$_aHeaders as $sName=>$sValue) {
-					header("$sName" . ($sValue ? ": $sValue" : ''));
-				}
-				
-				ob_flush();
-				ob_clean();
-				
-				self::$_aHeaders = [];
-			}
+			self::_sendHeaders();
+			ob_flush();
+			ob_clean();
 			die();
 		}
 		
