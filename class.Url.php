@@ -1,4 +1,4 @@
-<?
+<?php
 
 	class Url {
 		private $_aUrl                        = [];

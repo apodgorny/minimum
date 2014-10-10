@@ -1,4 +1,4 @@
-<?
+<?php
 	session_start();
 	
 	require_once 'server/settings.global.php';
@@ -19,6 +19,7 @@
 	
 	$_ENV['DEBUG'] = '';
 	$_ENV['LAST_EVALED_FILE'] = null;
+	$_ENV['EVAL_ERROR'] = false;
 	$_ENV['SETTINGS']['HOST'] = $_ENV['SETTINGS']['HOST'] ? $_ENV['SETTINGS']['HOST'] : $_SERVER['HTTP_HOST'];
 	$_ENV['SETTINGS']['LOG_FILE'] = $_ENV['SETTINGS']['PROJECT_ROOT'] . '/' . $_ENV['SETTINGS']['LOG_FILE'];
 	$_ENV['SETTINGS']['PROTOCOL'] = Request::isHttps() ? 'https' : 'http';
@@ -77,6 +78,10 @@
 		foreach ($a as $m) {
 			if (is_array($m)) {
 				$_ENV['DEBUG'] .= ' ' . print_r($m, 1);
+			} else if (is_bool($m)) {
+				$_ENV['DEBUG'] .= ' ' . ($m ? 'TRUE' : 'FALSE');
+			} else if (is_null($m)) {
+				$_ENV['DEBUG'] .= ' NULL';
 			} else {
 				$_ENV['DEBUG'] .= ' ' . $m;
 			}
@@ -132,10 +137,11 @@
 			E_USER_DEPRECATED   => 'E_USER_DEPRECATED',
 			E_ALL               => 'E_ALL'
 		];
-		if ($_ENV['LAST_EVALED_FILE'] && strstr($sFileName, 'eval()\'d code') !== false) {
+		if ($_ENV['EVAL_ERROR'] && $_ENV['LAST_EVALED_FILE']) {
 			$sFileName = $_ENV['LAST_EVALED_FILE'];
+			$sWrongCode = substr(explode("\n", $_ENV['EVALED_CODE'])[$nLineNumber-1], 0, 100) . '...';
 		}
-		debug('ERROR ' . $aErrorNames[$nCode] . ": $sMessage in $sFileName, on line $nLineNumber");
+		debug('ERROR ' . $aErrorNames[$nCode] . ": $sMessage in $sFileName, on line $nLineNumber: \n". $sWrongCode);
 	}
 	
 	function exceptionHandler($oException) {
@@ -156,7 +162,7 @@
 	
 	/********************************************************/
 	
-	if (!preg_match('/\.(js|css|gif|png|jpg|jpeg|ico|woff)$/', Request::path())) {
+	if (!preg_match('/\.(css|gif|png|jpg|jpeg|ico|woff)$/', Request::path())) {
 		debug(str_pad('------ '.Request::path().' ----', 80, '-').microtime(true).'---');
 	}
 	

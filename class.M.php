@@ -1,4 +1,4 @@
-<?
+<?php
 
 	class M {
 		public static function __callStatic($sMethod, $aParams=[]) {

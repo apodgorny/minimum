@@ -1,4 +1,4 @@
-<?
+<?php
 	
 	class Request {
 		
@@ -28,7 +28,7 @@
 					if (!$mParam && strlen($sParam) > 0) {
 						$mParam = $sParam;
 					}
-				
+					
 					if ($bRequired && !$mParam) {
 						throw new Exception("Parameter \"$sParamName\" is empty");
 					}

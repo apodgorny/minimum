@@ -1,4 +1,4 @@
-<?
+<?php
 	class MimeType {
 		private static $_aTypes = array(
 			'html'  => 'text/html',

@@ -5,7 +5,7 @@ __PHP_BEGIN__
 
 	$_ENV['SETTINGS'] = [
 		'PRODUCTION'    => false,                  // Should be set in settings.host.php (development or production?)
-		'HOST'          => $_SERVER['HTTP_HOST'],  // Should be set in settings.host.php (Ex: mydomain.com or localhost or IP)
+		'HOST'          => isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost',  // Should be set in settings.host.php
 		'PROJECT_ROOT'  => '',                     // Should be set in settings.host.php (/www/mysite - location in file system)
 		'SITE_PATH'     => '',                     // Should be set in settings.host.php (http://host/folder without http://host)
 	

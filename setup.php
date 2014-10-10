@@ -1,4 +1,4 @@
-<?
+<?php
 
 	class Setup {
 		public static $PRODUCTION    = false;

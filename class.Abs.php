@@ -1,4 +1,4 @@
-<?
+<?php
 	
 	require_once 'lib/url_to_absolute/url_to_absolute.php';
 	require_once 'lib/simple_html_dom/simple_html_dom.php';
@@ -37,14 +37,13 @@
 			$aTags = $oHtml->find('style');
 			foreach ($aTags as $oTag) {
 				$oTag->innertext = preg_replace_callback(
-					'|url\s*\(\s*[\'"]?([^\'"\)]+)[\'"]\s*\)|',
+					'|url\s*\(\s*[\'"]?([^\'"\)]+)[\'"]?\s*\)|',
 					function($aMatches) use ($sBaseUrl) {
 						return 'url("'. trim(self::absolutizeUrl($sBaseUrl, $aMatches[1])). '")';
 					},
 					$oTag->innertext
 				);
 			}
-			
 			
 			return $oHtml . '';
 		}
