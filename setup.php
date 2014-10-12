@@ -54,12 +54,12 @@
 				self::$HOST = $argv[4];
 			}
 
-			self::$PRODUCTION    = (bool)$argv[2];
-			self::$DOCUMENT_ROOT = realpath($argv[1]);
-			self::$PROJECT_ROOT  = implode('/', array_slice(explode('/', __FILE__), 0, -3));
-			self::$SITE_PATH     = str_replace(self::$DOCUMENT_ROOT, '', self::$PROJECT_ROOT);
-			self::$IMAGES_PATH   = $argv[3];
-			self::$aDirectories[]      = self::$IMAGES_PATH;
+			self::$PRODUCTION     = (bool)$argv[2];
+			self::$DOCUMENT_ROOT  = realpath($argv[1]);
+			self::$PROJECT_ROOT   = implode('/', array_slice(explode('/', __FILE__), 0, -3));
+			self::$SITE_PATH      = str_replace(self::$DOCUMENT_ROOT, '', self::$PROJECT_ROOT);
+			self::$IMAGES_PATH    = $argv[3];
+			self::$aDirectories[] = self::$IMAGES_PATH;
 		}
 		
 		public static function createDirectories() {
@@ -88,11 +88,11 @@
 				$sTemplate = 'setup/' . $sKey . '.php';
 				if (file_exists($sTemplate)) {
 					ob_start();
-					eval('?>' . file_get_contents($sTemplate) . '<?');
+					eval('?>' . file_get_contents($sTemplate) . '<?php');
 					$sContents = ob_get_contents();
 					ob_end_clean();
 			
-					$sContents = str_replace('__PHP_BEGIN__',  '<?', $sContents);
+					$sContents = str_replace('__PHP_BEGIN__',  '<?php', $sContents);
 					$sContents = str_replace('__PHP_END__', '?>', $sContents);
 				}
 				if (!file_exists($aFile['path'])) {

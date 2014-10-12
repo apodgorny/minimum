@@ -56,7 +56,7 @@
 			if (parse_url($sUrl, PHP_URL_SCHEME) != '') { return $sUrl; }
 
 			/* queries and anchors */
-			if ($sUrl[0]=='#' || $sUrl[0]=='?') { return M::SITE_ROOT().$sUrl; }
+			if (!$sUrl || $sUrl[0]=='#' || $sUrl[0]=='?') { return M::SITE_ROOT().$sUrl; }
 
 			/* parse base URL and convert to local variables:
 			$scheme, $host, $path */

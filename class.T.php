@@ -40,7 +40,9 @@
 					if (file_exists($sPath)) {
 						self::_findJsFile($sTemplate);
 						self::_findCssFile($sTemplate);
-						print Processor::evalString(file_get_contents($sPath), $aArgs[0]);
+						if (isset($aArgs[0])) {
+							print Processor::evalString(file_get_contents($sPath), $aArgs[0]);
+						}
 						return;
 					}
 				}
@@ -57,6 +59,7 @@
 		}
 		
 		public static function getCss() {
+			debug('getCss');
 			$sCss = '';
 			foreach (self::$_aCss as $sTemplate => $sFileName) {
 				$sCss .= "/***** $sTemplate *****/\n" . file_get_contents($sFileName) . "\n";
