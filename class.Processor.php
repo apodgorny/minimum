@@ -6,7 +6,7 @@
 			if (class_exists('P')) { P::mark('EVAL_BEGIN'); }
 			ob_start();
 			extract($aContextVariables);
-			if (eval('?>' . $s . '<?') === false) {
+			if (eval('?>' . $s) === false) {
 				$_ENV['EVAL_ERROR'] = true;
 				$_ENV['EVALED_CODE'] = $s;
 				file_put_contents(M::PROJECT_ROOT() . '/server/logs/processor.log', $s);

@@ -74,9 +74,10 @@
 	}
 	
 	function debug() {
+		if (isset($_ENV['CAN_DEBUG']) && !$_ENV['CAN_DEBUG']) { return; }
 		$a = func_get_args();
 		foreach ($a as $m) {
-			if (is_array($m)) {
+			if (is_array($m) || is_object($m)) {
 				$_ENV['DEBUG'] .= ' ' . print_r($m, 1);
 			} else if (is_bool($m)) {
 				$_ENV['DEBUG'] .= ' ' . ($m ? 'TRUE' : 'FALSE');
@@ -119,6 +120,7 @@
 	}
 	
 	function errorHandler($nCode, $sMessage, $sFileName, $nLineNumber) {
+		$_ENV['CAN_DEBUG'] = true;
 		$aErrorNames = [
 			E_ERROR             => 'E_ERROR',
 			E_WARNING           => 'E_WARNING',
@@ -137,6 +139,7 @@
 			E_USER_DEPRECATED   => 'E_USER_DEPRECATED',
 			E_ALL               => 'E_ALL'
 		];
+		$sWrongCode = '';
 		if ($_ENV['EVAL_ERROR'] && $_ENV['LAST_EVALED_FILE']) {
 			$sFileName = $_ENV['LAST_EVALED_FILE'];
 			$sWrongCode = substr(explode("\n", $_ENV['EVALED_CODE'])[$nLineNumber-1], 0, 100) . '...';
@@ -145,6 +148,7 @@
 	}
 	
 	function exceptionHandler($oException) {
+		$_ENV['CAN_DEBUG'] = true;
 		$nCode = $oException->getCode();
 		$nCode = $nCode ? $nCode : 500;
 		
@@ -162,8 +166,11 @@
 	
 	/********************************************************/
 	
-	if (!preg_match('/\.(css|gif|png|jpg|jpeg|ico|woff)$/', Request::path())) {
+	if (!preg_match('/\.(js|css|gif|png|jpg|jpeg|ico|woff)$/', Request::path())) {
 		debug(str_pad('------ '.Request::path().' ----', 80, '-').microtime(true).'---');
+		$_ENV['CAN_DEBUG'] = true;
+	} else {
+		$_ENV['CAN_DEBUG'] = false;
 	}
 	
 	/********************************************************/

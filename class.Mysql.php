@@ -4,6 +4,25 @@
 		
 		private static $_oDb     = null;
 		private static $_oResult = null;
+		private static $_aFields = [];
+		
+		private static function _castValue($sValue, $nType) {
+			switch ($nType) {
+				case 1:
+				case 2:
+				case 3:
+				case 8:
+				case 9:
+				case 16:
+					return intval($sValue);
+				case 4:
+				case 5:
+				case 246:
+					return floatval($sValue);
+				default:
+					return stripslashes($sValue);
+			}
+		}
 		
 		/******************* PUBLIC *******************/
 		
@@ -47,7 +66,7 @@
 		public static function query($sQuery, $aArgs=[], $bDebug=false) {
 			$m = null;
 			for ($n=count($aArgs)-1; $n>=0; $n--) {
-				switch (gettype($aArgs[$n])) {
+				switch (getType($aArgs[$n])) {
 					case 'integer' :
 					case 'double'  :
 					case 'float'   :
@@ -77,10 +96,12 @@
 		public static function getRows($sQuery, $aArgs=[], $bDebug=false) {
 			if ($sQuery) { self::query($sQuery, $aArgs, $bDebug); }
 			$aRows = [];
-			if (method_exists(self::$_oResult, 'data_seek') && self::$_oResult->data_seek(0)) {
-				while (self::$_oResult && $aRow = self::$_oResult->fetch_assoc()) {
-					foreach ($aRow as $sKey=>$sValue) {
-						$aRow[$sKey] = stripslashes($sValue);
+			if (self::$_oResult && self::$_oResult->data_seek(0)) {
+				$aFields = self::$_oResult->fetch_fields();
+				$nFields = count($aFields);
+				while ($aRow = self::$_oResult->fetch_row()) {
+					for ($n=0; $n<$nFields; $n++) {
+						$aRow[$aFields[$n]->name] = self::_castValue($aRow[$n], $aFields[$n]->type);
 					}
 					$aRows[] = $aRow;
 				}
@@ -90,12 +111,15 @@
 		
 		public static function getRow($sQuery, $aArgs=[], $bDebug=false) {
 			if ($sQuery) { self::query($sQuery, $aArgs, $bDebug); }
+			$aReturnRow = [];
 			if (self::$_oResult && self::$_oResult->data_seek(0)) {
-				if ($aRow = self::$_oResult->fetch_assoc()) {
-					foreach ($aRow as $sKey=>$sValue) {
-						$aRow[$sKey] = stripslashes($sValue);
+				$aFields = self::$_oResult->fetch_fields();
+				$nFields = count($aFields);
+				if ($aRow = self::$_oResult->fetch_row()) {
+					for ($n=0; $n<$nFields; $n++) {
+						$aReturnRow[$aFields[$n]->name] = self::_castValue($aRow[$n], $aFields[$n]->type);
 					}
-					return $aRow;
+					return $aReturnRow;
 				}
 			}
 			return null;
@@ -104,9 +128,11 @@
 		public static function getValue($sQuery, $aArgs=[], $bDebug=false) {
 			if ($sQuery) { self::query($sQuery, $aArgs, $bDebug); }
 			if (self::$_oResult && self::$_oResult->data_seek(0)) {
-				if ($aRow = self::$_oResult->fetch_assoc()) {
+				$aFields = self::$_oResult->fetch_fields();
+				$nFields = count($aFields);
+				if ($aRow = self::$_oResult->fetch_row()) {
 					foreach ($aRow as $sKey=>$sValue) {
-						return stripslashes($sValue);
+						return self::_castValue($aRow[0], $aFields[0]->type);
 					}
 				}
 			}
@@ -116,10 +142,12 @@
 		public static function getColumn($sQuery, $aArgs=[], $bDebug=false) {
 			if ($sQuery) { self::query($sQuery, $aArgs, $bDebug); }
 			$aColumn = [];
-			if (method_exists(self::$_oResult, 'data_seek') && self::$_oResult->data_seek(0)) {
-				while (self::$_oResult && $aRow = self::$_oResult->fetch_assoc()) {
-					foreach ($aRow as $sKey=>$sValue) {
-						$aColumn[] = stripslashes($aRow[$sKey]);
+			if (self::$_oResult && self::$_oResult->data_seek(0)) {
+				$aFields = self::$_oResult->fetch_fields();
+				$nFields = count($aFields);
+				while ($aRow = self::$_oResult->fetch_assoc()) {
+					for ($n=0; $n<$nFields; $n++) {
+						$aColumn[] = self::_castValue($aRow[$n], $aFields[$n]->type);
 					}
 				}
 			}
