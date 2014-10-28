@@ -88,7 +88,7 @@
 				$sTemplate = 'setup/' . $sKey . '.php';
 				if (file_exists($sTemplate)) {
 					ob_start();
-					eval('?>' . file_get_contents($sTemplate) . '<?php');
+					eval('?>' . file_get_contents($sTemplate));
 					$sContents = ob_get_contents();
 					ob_end_clean();
 			
