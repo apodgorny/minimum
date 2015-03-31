@@ -51,7 +51,7 @@
 		/**
 		 *  Absolutize to current url – use in templates
 		 */
-		public static function absolutize($sUrl) {
+		public static function absolutize($sUrl, $sPort=null) {
 			/* return if already absolute URL */
 			if (parse_url($sUrl, PHP_URL_SCHEME) != '') { return $sUrl; }
 
@@ -67,6 +67,8 @@
 			if (!isset($scheme)) { $scheme = ''; } else { $scheme = $scheme . ':'; }
 			if (!isset($host))   { $host = ''; }
 			if (!isset($path))   { $path = ''; }
+			
+			if ($sPort) { $host = $host . ':' . $sPort; }
 
 			/* destroy path if relative url points to root */
 			//if ($sUrl[0] == '/') { $path = ''; }

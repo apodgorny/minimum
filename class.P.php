@@ -7,6 +7,7 @@
 		private static $_n = 0;
 		
 		public static function mark($sName) {
+			return;
 			if (!isset(self::$_a[$sName])) {
 				self::$_a[$sName] = microtime(true);
 				self::$_n ++;
@@ -14,6 +15,7 @@
 		}
 		
 		public static function report() {
+			return;
 			$n = 0;
 			$aIntervals = [];
 			$nTotalTime = 0;

@@ -52,7 +52,12 @@
 			self::$_oDb = new mysqli($sHost, $sUser, $sPass, $sDb);
 			
 			if (self::$_oDb->connect_errno) {
-				throw new Exception('Mysql error: (' . self::$_oDb->connect_errno . ') ' . self::$_oDb->connect_error);
+				switch (self::$_oDb->connect_errno) {
+					case 2002:
+						throw new Exception('Mysql error: MYSQL SERVER IS DOWN');
+					default:
+						throw new Exception('Mysql error: (' . self::$_oDb->connect_errno . ') ' . self::$_oDb->connect_error);
+				}
 			}
 		}
 		
@@ -102,6 +107,7 @@
 				while ($aRow = self::$_oResult->fetch_row()) {
 					for ($n=0; $n<$nFields; $n++) {
 						$aRow[$aFields[$n]->name] = self::_castValue($aRow[$n], $aFields[$n]->type);
+						unset($aRow[$n]);
 					}
 					$aRows[] = $aRow;
 				}

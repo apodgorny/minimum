@@ -9,8 +9,8 @@
 			return null;
 		}
 		
-		public static function url($sUrl) {
-			return Abs::absolutize($sUrl);
+		public static function url($sUrl, $sPort=null) {
+			return Abs::absolutize($sUrl, $sPort);
 		}
 		
 		public static function path($sPath) {

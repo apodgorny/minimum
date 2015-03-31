@@ -1,5 +1,4 @@
 <?php
-	session_start();
 	
 	require_once 'server/settings.global.php';
 	require_once 'server/settings.project.php';
@@ -16,6 +15,9 @@
 	}
 	
 	/********************************************************/
+	
+	session_name($_ENV['SETTINGS']['SESSION_NAME']);
+	session_start();
 	
 	$_ENV['DEBUG'] = '';
 	$_ENV['LAST_EVALED_FILE'] = null;
