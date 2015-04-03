@@ -116,8 +116,17 @@
 			self::$_bReadyToSend = true;
 		}
 		
-		public static function sendError($oException) {
-			self::setHeader('HTTP/1.0 '.$oException->getCode().' '.$oException->getMessage());
+		/**
+		 *  sendError(sMessage, nHttpCode)
+		 *  sendError(oException)
+		 */
+		public static function sendError($m, $nHttpCode=500) {
+			if (!is_string($m)) {
+				$nHttpCode = $m->getCode();
+				$m         = $m->getMessage();
+			}
+			
+			self::setHeader("HTTP/1.0 $nHttpCode $m");
 			self::$_bReadyToSend = true;
 			self::end();
 		}
