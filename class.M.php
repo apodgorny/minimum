@@ -10,6 +10,13 @@
 		}
 		
 		public static function url($sUrl, $sPort=null) {
+			if (!$sPort) {
+				if (preg_match("|^https?://|", $sUrl)) {
+					$sPort = M::HTTPS_PORT();
+				} else {
+					$sPort = M::HTTP_PORT();
+				}
+			}
 			return Abs::absolutize($sUrl, $sPort);
 		}
 		

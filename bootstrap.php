@@ -31,7 +31,7 @@
 			? ':' . $_ENV['SETTINGS']['HTTP_PORT'] 
 			: ''
 		) . $_ENV['SETTINGS']['SITE_PATH'];
-		
+
 	$_ENV['SETTINGS']['HTTPS_ROOT'] = 'https://' . $_ENV['SETTINGS']['HOST'] . 
 		($_ENV['SETTINGS']['HTTPS_PORT'] != 443 
 			? ':' . $_ENV['SETTINGS']['HTTPS_PORT'] 
@@ -45,7 +45,7 @@
 	$_ENV['SETTINGS']['SITE_ROOT'] = $_ENV['SETTINGS']['PROTOCOL'] == 'https' 
 		? $_ENV['SETTINGS']['HTTPS_ROOT'] 
 		: $_ENV['SETTINGS']['HTTP_ROOT'];
-		
+
 	/********************************************************/
 
 	function str_replace_first($sNeedle, $sReplacement, $sHaystack) {
