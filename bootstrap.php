@@ -19,13 +19,28 @@
 	session_name($_ENV['SETTINGS']['SESSION_NAME']);
 	session_start();
 	
-	$_ENV['DEBUG'] = '';
+	$_ENV['DEBUG']            = '';
 	$_ENV['LAST_EVALED_FILE'] = null;
-	$_ENV['EVAL_ERROR'] = false;
-	$_ENV['SETTINGS']['HOST'] = /*$_ENV['SETTINGS']['HOST'] ? $_ENV['SETTINGS']['HOST'] :*/ $_SERVER['HTTP_HOST'];
+	$_ENV['EVAL_ERROR']       = false;
+
+	$_ENV['SETTINGS']['HOST']     = $_ENV['SETTINGS']['HOST'] ? $_ENV['SETTINGS']['HOST'] : $_SERVER['HTTP_HOST'];
 	$_ENV['SETTINGS']['LOG_FILE'] = $_ENV['SETTINGS']['PROJECT_ROOT'] . '/' . $_ENV['SETTINGS']['LOG_FILE'];
 	$_ENV['SETTINGS']['PROTOCOL'] = Request::isHttps() ? 'https' : 'http';
-	
+
+	// Request root is used for ajax to figure out what domain was used in request to re–use it for ajax
+	// to get around cross–origin errors
+	// $_ENV['SETTINGS']['REQUEST_ROOT'] = Request::isHttps()
+	// 	? 'https://' . $_SERVER['HTTP_HOST'] . 
+	// 		($_ENV['SETTINGS']['HTTPS_PORT'] != 443 
+	// 			? ':' . $_ENV['SETTINGS']['HTTPS_PORT'] 
+	// 			: ''
+	// 		) . $_ENV['SETTINGS']['SITE_PATH'];
+	// 	: 'http://' . $_SERVER['HTTP_HOST'] . 
+	// 		($_ENV['SETTINGS']['HTTP_PORT'] != 80 
+	// 			? ':' . $_ENV['SETTINGS']['HTTP_PORT'] 
+	// 			: ''
+	// 		) . $_ENV['SETTINGS']['SITE_PATH'];
+
 	$_ENV['SETTINGS']['HTTP_ROOT'] = 'http://' . $_ENV['SETTINGS']['HOST'] . 
 		($_ENV['SETTINGS']['HTTP_PORT'] != 80 
 			? ':' . $_ENV['SETTINGS']['HTTP_PORT'] 
