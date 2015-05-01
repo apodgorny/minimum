@@ -22,7 +22,7 @@
 	$_ENV['DEBUG'] = '';
 	$_ENV['LAST_EVALED_FILE'] = null;
 	$_ENV['EVAL_ERROR'] = false;
-	$_ENV['SETTINGS']['HOST'] = $_ENV['SETTINGS']['HOST'] ? $_ENV['SETTINGS']['HOST'] : $_SERVER['HTTP_HOST'];
+	$_ENV['SETTINGS']['HOST'] = /*$_ENV['SETTINGS']['HOST'] ? $_ENV['SETTINGS']['HOST'] :*/ $_SERVER['HTTP_HOST'];
 	$_ENV['SETTINGS']['LOG_FILE'] = $_ENV['SETTINGS']['PROJECT_ROOT'] . '/' . $_ENV['SETTINGS']['LOG_FILE'];
 	$_ENV['SETTINGS']['PROTOCOL'] = Request::isHttps() ? 'https' : 'http';
 	
