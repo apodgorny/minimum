@@ -15,6 +15,9 @@
 			}
 			throw new Exception("Class $sClassName does not exist");
 		}
+
+		public function catchAll() {
+		}
 		
 		public function execute() {
 			$sPath = Request::path();
@@ -30,6 +33,7 @@
 							throw new Exception('Service not found: '.$sMethod, 404);
 						}
 					} else if (method_exists($this, $sMethod)) {
+						$this->catchAll();
 						$bReturn = $this->$sMethod();
 						P::mark(get_class($this) . '::' . $sMethod);
 						Response::end();

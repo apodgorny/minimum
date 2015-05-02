@@ -22,7 +22,28 @@
 		}
 		
 		/******************* PUBLIC *******************/
-		
+
+		public static function getFullUrl($bUseForwardedHost=false) {
+		    $bHttps    = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? true:false;
+		    $sProtocol = strtolower($_SERVER['SERVER_PROTOCOL']);
+		    $sProtocol = substr($sProtocol, 0, strpos($sProtocol, '/')) . (($bHttps) ? 's' : '');
+		    $sPort     = $_SERVER['SERVER_PORT'];
+
+		    $sPort = ((!$bHttps && $sPort=='80') || ($bHttps && $sPort=='443'))
+		    	? ''
+		    	: ':'.$sPort;
+
+		    $sHost = ($bUseForwardedHost && isset($_SERVER['HTTP_X_FORWARDED_HOST'])
+		    	? $_SERVER['HTTP_X_FORWARDED_HOST']
+		    	: isset($_SERVER['HTTP_HOST'])
+		    		? $_SERVER['HTTP_HOST']
+		    		: null
+		    );
+
+		    $sHost = isset($sHost) ? $sHost : $_SERVER['SERVER_NAME'] . $sPort;
+		    return $sProtocol . '://' . $sHost . $_SERVER['REQUEST_URI'];
+		}
+
 		public static function setContentType($sType) {
 			self::$_aHeaders['Content-Type'] = $sType;
 		}
@@ -151,6 +172,13 @@
 			self::setHeader('HTTP/1.1 301 Moved Permanently'); 
 			self::setHeader("Location: $sUrl");
 			self::end();
+		}
+
+		public static function switchDomain($sFromDomain, $sToDomain) {
+			if ($sFromDomain == '*' || $sFromDomain == $_SERVER['HTTP_HOST']) {
+				$sUrl = str_replace($_SERVER['HTTP_HOST'], $sToDomain, self::getFullUrl());
+				self::redirectTo($sUrl);
+			}
 		}
 		
 		public static function redirectToHttp() {
