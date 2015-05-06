@@ -1,8 +1,28 @@
 <?php
 	
 	class Request {
+		private static $_aCookiesFromUrl = [];
 		
 		/******************* PUBLIC *******************/
+
+		// public static function initialize() {
+		// 	if (isset($_REQUEST['___dsc___']) && !self::$_aCookiesFromUrl) {
+		// 		$aCookies = json_decode($_REQUEST['___dsc___']);
+		// 		if (isset($aCookies[session_name()])) {
+		// 			session_write_close();
+		// 			session_id($aCookies[session_name()]);
+		// 			session_start();
+		// 			$_SESSION['___dsc___'] = $aCookies;
+		// 		}
+		// 	}
+		// }
+
+		// public static function getCookiesFromUrl() {
+		// 	if (isset($_REQUEST['dsc']) && !self::$_aCookiesFromUrl) {
+		// 		self::$_aCookiesFromUrl = json_decode($_REQUEST['dsc']);
+		// 	}
+		// 	return self::$_aCookiesFromUrl;
+		// }
 		
 		public static function path() {
 			return M::REQUEST_PATH();

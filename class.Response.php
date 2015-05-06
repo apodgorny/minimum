@@ -177,6 +177,15 @@
 		public static function switchDomain($sFromDomain, $sToDomain) {
 			if ($sFromDomain == '*' || $sFromDomain == $_SERVER['HTTP_HOST']) {
 				$sUrl = str_replace($_SERVER['HTTP_HOST'], $sToDomain, self::getFullUrl());
+				// Send cookies available at domain that we are switching from
+				// The cookies are accepted at Request::getCookiesFromUrl();
+				// dsc - domain switch cookies
+				// $sCookies = json_encode($_COOKIE);
+				// if (strpos($sUrl, '?') === false) {
+				// 	$sUrl = $sUrl + '?___dsc___' + $sCookies;
+				// } else {
+				// 	$sUrl = $sUrl + '&___dsc___' + $sCookies;
+				// }
 				self::redirectTo($sUrl);
 			}
 		}

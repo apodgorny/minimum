@@ -15,11 +15,12 @@
 	}
 	
 	/********************************************************/
+
+	// Request::acceptCookies();
 	
 	session_name($_ENV['SETTINGS']['SESSION_NAME']);
 	session_start();
 	
-	$_ENV['DEBUG']            = '';
 	$_ENV['LAST_EVALED_FILE'] = null;
 	$_ENV['EVAL_ERROR']       = false;
 
@@ -92,6 +93,9 @@
 	
 	function debug() {
 		if (isset($_ENV['CAN_DEBUG']) && !$_ENV['CAN_DEBUG']) { return; }
+		if (!isset($_ENV['DEBUG'])) {
+			$_ENV['DEBUG'] = '';
+		}
 		$a = func_get_args();
 		foreach ($a as $m) {
 			if (is_array($m) || is_object($m)) {
