@@ -47,6 +47,8 @@
 		: $_ENV['SETTINGS']['HTTP_ROOT'];
 
 	/********************************************************/
+	
+	Mysql::query('SET @@global.max_allowed_packet = ' . $_ENV['SETTINGS']['MYSQL_MAX_ALLOWED_PACKET']);
 
 	function str_replace_first($sNeedle, $sReplacement, $sHaystack) {
 		if ($sNeedle && $sHaystack) {
