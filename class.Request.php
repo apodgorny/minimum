@@ -1,7 +1,7 @@
 <?php
 	
 	class Request {
-		private static $_aCookiesFromUrl = [];
+		// private static $_aCookiesFromUrl = [];
 		
 		/******************* PUBLIC *******************/
 
