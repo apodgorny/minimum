@@ -179,7 +179,7 @@
 				$sUrl = str_replace($_SERVER['HTTP_HOST'], $sToDomain, self::getFullUrl());
 				foreach ($_COOKIE as $sName=>$sValue) {
 					if (isset(M::COOKIE_TTL()[$sName])) {
-						setcookie($sName, $sValue, M::COOKIE_TTL()[$sName]);
+						setcookie($sName, $sValue, M::COOKIE_TTL()[$sName], '/');
 					}
 				}
 				self::redirectTo($sUrl);
