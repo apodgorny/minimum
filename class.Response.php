@@ -175,8 +175,11 @@
 		}
 
 		public static function switchDomain($sFromDomain, $sToDomain) {
-			if ($sFromDomain == '*' || strrpos($_SERVER['HTTP_HOST'], $sFromDomain) == strlen($_SERVER['HTTP_HOST']) - strlen($sFromDomain)) {
-				$sUrl = str_replace($_SERVER['HTTP_HOST'], $sToDomain, self::getFullUrl());
+			$bEndsWithFromDomain = strrpos($_SERVER['HTTP_HOST'], $sFromDomain) == strlen($_SERVER['HTTP_HOST']) - strlen($sFromDomain);
+			$sSubdomain          = str_replace($sFromDomain, '', $_SERVER['HTTP_HOST']);
+			
+			if ($sFromDomain == '*' || $bEndsWithFromDomain) {
+				$sUrl = str_replace($_SERVER['HTTP_HOST'], $sSubdomain.$sToDomain, self::getFullUrl());
 				foreach ($_COOKIE as $sName=>$sValue) {
 					if (isset(M::COOKIE_TTL()[$sName])) {
 						setcookie($sName, $sValue, M::COOKIE_TTL()[$sName], '/');

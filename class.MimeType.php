@@ -172,7 +172,7 @@
 			}
 			return in_array($sExtension, self::$_aEvaledExtensionsDev);
 		}
-	
+
 		public static function guess($sExtension) {
 			if (isset(self::$_aTypes[$sExtension])) {
 				return self::$_aTypes[$sExtension];
