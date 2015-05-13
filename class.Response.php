@@ -177,7 +177,7 @@
 		public static function switchDomain($sFromDomain, $sToDomain) {
 			$bEndsWithFromDomain = strrpos($_SERVER['HTTP_HOST'], $sFromDomain) == strlen($_SERVER['HTTP_HOST']) - strlen($sFromDomain);
 			$sSubdomain          = str_replace($sFromDomain, '', $_SERVER['HTTP_HOST']);
-			
+
 			if ($sFromDomain == '*' || $bEndsWithFromDomain) {
 				$sUrl = str_replace($_SERVER['HTTP_HOST'], $sSubdomain.$sToDomain, self::getFullUrl());
 				foreach ($_COOKIE as $sName=>$sValue) {

@@ -18,6 +18,11 @@
 
 	session_name($_ENV['SETTINGS']['SESSION_NAME']);
 	session_start();
+
+	$_ENV['SETTINGS']['BUILD_ID'] = '';
+	if (file_exists($_ENV['SETTINGS']['PROJECT_ROOT'].'/build')) {
+		$_ENV['SETTINGS']['BUILD_ID'] = file_get_contents($_ENV['SETTINGS']['PROJECT_ROOT'].'/build');
+	}
 	
 	$_ENV['LAST_EVALED_FILE'] = null;
 	$_ENV['EVAL_ERROR']       = false;
