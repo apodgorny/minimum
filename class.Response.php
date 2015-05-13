@@ -12,6 +12,13 @@
 			if (!isset(self::$_aHeaders['Content-Type'])) {
 				self::$_aHeaders['Content-Type'] = 'text/html';
 			}
+
+			if (!isset(self::$_aHeaders['Cache-Control'])) {
+				self::$_aHeaders['Cache-Control'] = 'max-age=31536000'; // One year
+				self::$_aHeaders['Pragma']        = 'max-age=31536000';
+				self::$_aHeaders['Expires']       = gmdate('D, d M Y H:i:s \G\M\T', time() + 31536000);
+				self::$_aHeaders['etag']          = M::BUILD_ID();
+			}
 			
 			if (self::$_bReadyToSend) {
 				foreach (self::$_aHeaders as $sName=>$sValue) {
