@@ -37,7 +37,7 @@
 			? ':' . $_ENV['SETTINGS']['HTTPS_PORT'] 
 			: ''
 		) . $_ENV['SETTINGS']['SITE_PATH'];
-		
+
 	$_ENV['SETTINGS']['REQUEST_PATH'] = isset($_SERVER['REQUEST_URI'])
 		? explode('?', str_replace_first($_ENV['SETTINGS']['SITE_PATH'], '', $_SERVER['REQUEST_URI']))[0]
 		: '';
