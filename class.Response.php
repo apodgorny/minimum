@@ -104,9 +104,9 @@
 		
 		public static function sendTemplate($sFileName, $aContext=[], $sScriptToInject='', $sCssToInject='') {
 			if (file_exists($sFileName)) {
-				self::setHeader('Cache-Control', 'no-cache');
-				self::setHeader('Pragma', 'no-cache');
-				self::setHeader('Expires', '-1');
+				// self::setHeader('Cache-Control', 'no-cache');
+				// self::setHeader('Pragma', 'no-cache');
+				// self::setHeader('Expires', '-1');
 				$sEvaledTemplate = Processor::evalFile($sFileName, $aContext, false);
 				$sScriptToInject .= T::getJs();
 				$sCssToInject    .= T::getCss();

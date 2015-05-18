@@ -7,3 +7,5 @@ AddType application/vnd.ms-fontobject .eot
 AddType font/ttf .ttf
 AddType font/otf .otf
 AddType application/x-font-woff .woff
+
+Header add Access-Control-Allow-Origin "*"
