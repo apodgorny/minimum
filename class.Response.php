@@ -93,9 +93,9 @@
 		
 		public static function sendHtmlFile($sFileName, $sScriptToInject=null, $sCssToInject=null, $bEval=true) {
 			if (file_exists($sFileName)) {
-				// self::setHeader('Cache-Control', 'no-cache');
-				// self::setHeader('Pragma', 'no-cache');
-				// self::setHeader('Expires', '-1');
+				self::setHeader('Cache-Control', 'no-cache');
+				self::setHeader('Pragma', 'no-cache');
+				self::setHeader('Expires', '-1');
 				return self::sendHtml(file_get_contents($sFileName), $sScriptToInject, $sCssToInject, $bEval);
 			} else {
 				throw new Exception("Error: file $sFileName does not exist", 404);
@@ -104,9 +104,9 @@
 		
 		public static function sendTemplate($sFileName, $aContext=[], $sScriptToInject='', $sCssToInject='') {
 			if (file_exists($sFileName)) {
-				// self::setHeader('Cache-Control', 'no-cache');
-				// self::setHeader('Pragma', 'no-cache');
-				// self::setHeader('Expires', '-1');
+				self::setHeader('Cache-Control', 'no-cache');
+				self::setHeader('Pragma', 'no-cache');
+				self::setHeader('Expires', '-1');
 				$sEvaledTemplate = Processor::evalFile($sFileName, $aContext, false);
 				$sScriptToInject .= T::getJs();
 				$sCssToInject    .= T::getCss();
