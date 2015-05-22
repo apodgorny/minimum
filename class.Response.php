@@ -166,7 +166,6 @@
 			}
 			
 			self::setHeader("HTTP/1.0 $nHttpCode $m");
-			self::sendJson($m);
 			self::$_bReadyToSend = true;
 			self::end();
 		}
