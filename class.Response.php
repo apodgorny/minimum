@@ -144,17 +144,29 @@
 			self::$_bReadyToSend = true;
 		}
 		
+		public static function sendJsonError($sType, $aData) {
+			self::setHeader("HTTP/1.0 500");
+			self::sendJson([
+				'type'   => $sType,
+				'errors' => $aData
+			]);
+			self::$_bReadyToSend = true;
+			self::end();
+		}
+		
 		/**
 		 *  sendError(sMessage, nHttpCode)
 		 *  sendError(oException)
+		 *  sendError(aErrors)
 		 */
 		public static function sendError($m, $nHttpCode=500) {
-			if (!is_string($m)) {
+			if (!is_string($m) && !is_array($m)) {
 				$nHttpCode = $m->getCode();
 				$m         = $m->getMessage();
 			}
 			
 			self::setHeader("HTTP/1.0 $nHttpCode $m");
+			self::sendJson($m);
 			self::$_bReadyToSend = true;
 			self::end();
 		}
