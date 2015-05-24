@@ -16,6 +16,7 @@
 	
 	/********************************************************/
 
+	session_set_cookie_params(M::SESSION_TTL());
 	session_name($_ENV['SETTINGS']['SESSION_NAME']);
 	session_start();
 
