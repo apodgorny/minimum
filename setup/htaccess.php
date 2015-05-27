@@ -9,3 +9,4 @@ AddType font/otf .otf
 AddType application/x-font-woff .woff
 
 Header add Access-Control-Allow-Origin "*"
+Header set X-XSS-Protection 0
