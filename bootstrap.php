@@ -1,6 +1,20 @@
 <?php
 	
+	require_once 'server/settings.global.php';
+	require_once 'server/settings.project.php';
 	require_once 'server/settings.host.php';
+	
+	/********************************************************/
+	
+	foreach ($_ENV['PROJECT_SETTINGS'] as $sKey=>$sValue) {
+		$_ENV['SETTINGS'][$sKey] = $sValue;
+	}
+	
+	foreach ($_ENV['HOST_SETTINGS'] as $sKey=>$sValue) {
+		$_ENV['SETTINGS'][$sKey] = $sValue;
+	}
+	
+	/********************************************************/
 	
 	session_set_cookie_params(M::SESSION_TTL());
 	session_name($_ENV['SETTINGS']['SESSION_NAME']);
