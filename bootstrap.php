@@ -177,7 +177,13 @@
 	/********************************************************/
 	
 	if (!preg_match('/\.(js|css|gif|png|jpg|jpeg|ico|woff)$/', Request::path())) {
-		debug(str_pad('------ '.Request::path().' ----', 80, '-').microtime(true).'---');
+		$sIp   = 'NO IP';
+		$sTime = date('m/d/Y h:i:s a', time());
+
+		if (isset($_SERVER['REMOTE_ADDR'])) {
+			$sIp = $_SERVER['REMOTE_ADDR'];
+		}
+		debug(str_pad('------ '.Request::path().' --[' . $sIp . ']--', 80, '-').$sTime.'---');
 		$_ENV['CAN_DEBUG'] = true;
 	} else {
 		$_ENV['CAN_DEBUG'] = false;
