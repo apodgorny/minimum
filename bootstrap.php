@@ -183,7 +183,7 @@
 		if (isset($_SERVER['REMOTE_ADDR'])) {
 			$sIp = $_SERVER['REMOTE_ADDR'];
 		}
-		debug(str_pad('------ '.Request::path().' ---', 70, '-') . '-[' . $sIp . ']---[ ' . $sTime . ' ]--');
+		debug(str_pad('------ '.Request::path().' ---', 55, '-') . '-[ ' . $sIp . ' ]--[ ' . $sTime . ' ]--');
 		$_ENV['CAN_DEBUG'] = true;
 	} else {
 		$_ENV['CAN_DEBUG'] = false;
