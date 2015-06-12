@@ -187,7 +187,7 @@
 				$sUrl = M::SITE_ROOT() . $sUrl;
 			}
 			debug('Redirecting to '.$sUrl);
-			self::setHeader('HTTP/1.1 301 Moved Permanently'); 
+			// self::setHeader('HTTP/1.1 301 Moved Permanently'); 
 			self::setHeader("Location: $sUrl");
 			self::end();
 		}
