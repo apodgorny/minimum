@@ -1,4 +1,23 @@
 <?php
+
+	if (!function_exists('debug')) {
+		function debug() {
+			$s = '';
+			$a = func_get_args();
+			foreach ($a as $m) {
+				if (is_array($m) || is_object($m)) {
+					$s .= ' ' . print_r($m, 1);
+				} else if (is_bool($m)) {
+					$s .= ' ' . ($m ? 'TRUE' : 'FALSE');
+				} else if (is_null($m)) {
+					$s .= ' NULL';
+				} else {
+					$s .= ' ' . $m;
+				}
+			}
+			print_r($s . PHP_EOL);
+		}
+	}
 	
 	class Mysql {
 		
@@ -43,13 +62,14 @@
 
 		public static function connect($sDb=null, $sHost=null, $sUser=null, $sPass=null) {
 			self::disconnect();
-			
+
 			$sHost = $sHost ? $sHost : M::DB_HOST();
 			$sUser = $sUser ? $sUser : M::DB_USER();
 			$sPass = $sPass ? $sPass : M::DB_PASSWORD();
 			$sDb   = $sDb   ? $sDb   : M::DB_NAME();
 
 			self::$_oDb = new mysqli($sHost, $sUser, $sPass, $sDb);
+			self::$_oDb->set_charset('utf8');
 			
 			if (self::$_oDb->connect_errno) {
 				switch (self::$_oDb->connect_errno) {

@@ -13,6 +13,7 @@
 			}
 			$sResult = ob_get_contents();
 			ob_end_clean();
+
 			if (class_exists('P')) { P::mark('EVAL_END'); }
 			
 			if ($bFlushBuffer) {
