@@ -25,7 +25,7 @@
 					$sParam = trim($_REQUEST[$sParamName]);
 					$mParam = json_decode($sParam, true);
 					
-					if (!$mParam && strlen($sParam) > 0) {
+					if (!$mParam && strlen($sParam) > 0 && $sParam != '""') {
 						$mParam = $sParam;
 					}
 					
