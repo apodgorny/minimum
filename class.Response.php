@@ -7,12 +7,17 @@
 		private static $_aHeaders         = [];
 		private static $_sCurrentFileName = '';
 		private static $_bReadyToSend     = false;
+		private static $_sCharset         = 'utf-8';
 		
 		private static function _sendHeaders() {
 			if (!isset(self::$_aHeaders['Content-Type'])) {
 				self::$_aHeaders['Content-Type'] = 'text/html';
 			}
-
+			
+			if (self::$_sCharset) {
+				self::$_aHeaders['Content-Type'] .= '; charset=' . self::$_sCharset;
+			}
+			
 			if (!isset(self::$_aHeaders['Cache-Control'])) {
 				self::$_aHeaders['Cache-Control'] = 'max-age=31536000'; // One year
 				self::$_aHeaders['Pragma']        = 'max-age=31536000';
@@ -29,6 +34,10 @@
 		}
 		
 		/******************* PUBLIC *******************/
+		
+		public static function setCharset($sCharset) {
+			self::$_sCharset = $sCharset;
+		}
 
 		public static function getFullUrl($bUseForwardedHost=false) {
 		    $bHttps    = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? true:false;

@@ -67,7 +67,7 @@
 			$sUser = $sUser ? $sUser : M::DB_USER();
 			$sPass = $sPass ? $sPass : M::DB_PASSWORD();
 			$sDb   = $sDb   ? $sDb   : M::DB_NAME();
-
+			debug($sHost, $sUser, $sPass, $sDb);
 			self::$_oDb = new mysqli($sHost, $sUser, $sPass, $sDb);
 			self::$_oDb->set_charset('utf8');
 			
