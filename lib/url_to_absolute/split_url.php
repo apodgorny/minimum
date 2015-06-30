@@ -179,8 +179,9 @@ function split_url( $url, $decode=TRUE )
 
 
 	// Split the URL into components.
-	if ( !preg_match( '!' . $xurl . '!', $url, $m ) )
+	if ( !preg_match( '!' . $xurl . '!u', $url, $m ) ) {
 		return FALSE;
+	}
 
 	if ( !empty($m[2]) )		$parts['scheme']  = strtolower($m[2]);
 

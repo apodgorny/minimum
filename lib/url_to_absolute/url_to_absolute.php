@@ -67,8 +67,9 @@ function url_to_absolute( $baseUrl, $relativeUrl, $bEncode = false )
 {
 	// If relative URL has a scheme, clean path and return.
 	$r = split_url( $relativeUrl );
-	if ( $r === FALSE )
+	if ( $r === FALSE ) {
 		return FALSE;
+	}
 	if ( !empty( $r['scheme'] ) )
 	{
 		if ( !empty( $r['path'] ) && $r['path'][0] == '/' )

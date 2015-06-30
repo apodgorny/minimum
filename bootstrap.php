@@ -19,6 +19,7 @@
 	session_set_cookie_params(M::SESSION_TTL());
 	session_name($_ENV['SETTINGS']['SESSION_NAME']);
 	session_start();
+	mb_internal_encoding('UTF-8');
 
 	$_ENV['SETTINGS']['BUILD_ID'] = '';
 	if (file_exists($_ENV['SETTINGS']['PROJECT_ROOT'].'/build')) {
