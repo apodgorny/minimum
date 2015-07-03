@@ -8,6 +8,12 @@
 			return M::REQUEST_PATH();
 		}
 		
+		public static function subdomain() {
+			$a = explode('.', $_SERVER['HTTP_HOST']);
+			array_pop($a);
+			return implode('.', $a);
+		}
+		
 		public static function param($sParamName, $bRequired=true) {
 			if (is_int($sParamName)) {
 				$aUrlParts = explode('/', trim(self::path(), ' /'));
@@ -24,7 +30,7 @@
 				if (isset($_REQUEST[$sParamName]) && $_REQUEST[$sParamName]) {
 					$sParam = trim($_REQUEST[$sParamName]);
 					$mParam = json_decode($sParam, true);
-					
+
 					if (!$mParam && strlen($sParam) > 0 && $sParam != '""') {
 						$mParam = $sParam;
 					}

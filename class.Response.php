@@ -116,7 +116,7 @@
 				self::setHeader('Cache-Control', 'no-cache');
 				self::setHeader('Pragma', 'no-cache');
 				self::setHeader('Expires', '-1');
-				$sEvaledTemplate = Processor::evalFile($sFileName, $aContext, false);
+				$sEvaledTemplate  = Processor::evalFile($sFileName, $aContext, false);
 				$sScriptToInject .= T::getJs();
 				$sCssToInject    .= T::getCss();
 				return self::sendHtml($sEvaledTemplate, $sScriptToInject, $sCssToInject, false);
