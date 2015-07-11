@@ -173,7 +173,7 @@
 				$nFields = count($aFields);
 				while ($aRow = self::$_oResult->fetch_assoc()) {
 					for ($n=0; $n<$nFields; $n++) {
-						$aColumn[] = self::_castValue($aRow[$n], $aFields[$n]->type);
+						$aColumn[] = self::_castValue($aRow[$aFields[$n]->name], $aFields[$n]->type);
 					}
 				}
 			}
