@@ -159,6 +159,7 @@
 	}
 	
 	function exceptionHandler($oException) {
+		
 		$_ENV['CAN_DEBUG'] = true;
 		$nCode = $oException->getCode();
 		$nCode = $nCode ? $nCode : 500;

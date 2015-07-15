@@ -15,6 +15,10 @@
 			}
 			throw new Exception("Class $sClassName does not exist");
 		}
+		
+		public function error404() {
+			throw new Exception('Page not found', 404);
+		}
 
 		public function catchAll() {
 		}
@@ -30,7 +34,8 @@
 						if (class_exists($sMethod)) {
 							return Service::create($sMethod)->execute();
 						} else {
-							throw new Exception('Service not found: '.$sMethod, 404);
+							debug('Service not found: '.$sMethod);
+							$this->error404();
 						}
 					} else if (method_exists($this, $sMethod)) {
 						$this->catchAll();
@@ -39,7 +44,8 @@
 						Response::end();
 						return $bReturn;
 					} else {
-						throw new Exception('Method not found: '.get_class($this).'::'.$sMethod.'()', 404);
+						debug('Method not found: '.get_class($this).'::'.$sMethod.'()');
+						$this->error404();
 					}
 				}
 			}
