@@ -186,6 +186,7 @@
 			$sIp = $_SERVER['REMOTE_ADDR'];
 		}
 		debug(str_pad('------ '.Request::path().' ---', 55, '-') . '-[ ' . $sIp . ' ]--[ ' . $sTime . ' ]--');
+		debug('starting session, id:', session_id());
 		$_ENV['CAN_DEBUG'] = true;
 	} else {
 		$_ENV['CAN_DEBUG'] = false;

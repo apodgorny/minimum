@@ -2,10 +2,19 @@
 	
 	class Request {
 		
+		private static $_aHeaders = [];
+		
 		/******************* PUBLIC *******************/
 
 		public static function path() {
 			return M::REQUEST_PATH();
+		}
+		
+		public static function getHeader($sHeader) {
+			if (!self::$_aHeaders) {
+				self::$_aHeaders = getallheaders();
+			}
+			return self::$_aHeaders[$sHeader];
 		}
 		
 		public static function subdomain() {
