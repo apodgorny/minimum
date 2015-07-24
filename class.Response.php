@@ -70,6 +70,17 @@
 		
 		public static function sendFileAbs($sAbsFilePath, $bEval=false) {
 			if (file_exists($sAbsFilePath)) {
+				global $MimeTypes;
+				self::$_sCurrentFileName = $sAbsFilePath;
+				$sExt  = strtolower(pathinfo($sAbsFilePath, PATHINFO_EXTENSION));
+				$sType = MimeType::guess($sExt);
+				if ($sType && !isset(self::$_aHeaders['Content-Type'])) {
+					self::setContentType($sType);
+					if (!MimeType::canEval($sExt)) {
+						$bEval = false;
+					}
+				}
+				
 				if ($bEval) {
 					return self::send(file_get_contents($sAbsFilePath), $bEval);
 				} else {
@@ -85,16 +96,6 @@
 		}
 		
 		public static function sendFile($sFileName, $bEval=true) {
-			global $MimeTypes;
-			self::$_sCurrentFileName = $sFileName;
-			$sExt  = strtolower(pathinfo($sFileName, PATHINFO_EXTENSION));
-			$sType = MimeType::guess($sExt);
-			if ($sType && !isset(self::$_aHeaders['Content-Type'])) {
-				self::setContentType($sType);
-				if (!MimeType::canEval($sExt)) {
-					$bEval = false;
-				}
-			}
 			$sFileName = M::path($sFileName);
 			// self::setHeader('Content-Length', filesize($sFileName));
 			return self::sendFileAbs($sFileName, $bEval);
