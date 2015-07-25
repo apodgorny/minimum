@@ -9,6 +9,7 @@
 		public static $IMAGES_PATH   = null;
 		
 		public static $aDirectories = [
+			'user_data',
 			'../classes',
 			'../logic',
 			'../logs',
