@@ -39,7 +39,7 @@
  * See:  http://www.opensource.org/licenses/bsd-license.php
  */
 
-require "split_url.php";
+// require "split_url.php";
 require "join_url.php";
 
 /**
@@ -66,7 +66,7 @@ require "join_url.php";
 function url_to_absolute( $baseUrl, $relativeUrl, $bEncode = false )
 {
 	// If relative URL has a scheme, clean path and return.
-	$r = split_url( $relativeUrl );
+	$r = parse_url( $relativeUrl );
 	if ( $r === FALSE ) {
 		return FALSE;
 	}
@@ -78,7 +78,7 @@ function url_to_absolute( $baseUrl, $relativeUrl, $bEncode = false )
 	}
 
 	// Make sure the base URL is absolute.
-	$b = split_url( $baseUrl );
+	$b = parse_url( $baseUrl );
 	if ( $b === FALSE || empty( $b['scheme'] ) || empty( $b['host'] ) )
 		return FALSE;
 	$r['scheme'] = $b['scheme'];
