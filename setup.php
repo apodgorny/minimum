@@ -6,7 +6,7 @@
 		public static $PROJECT_ROOT  = null;
 		public static $SITE_PATH     = null;
 		public static $HOST          = 'localhost';
-		public static $IMAGES_PATH   = null;
+		public static $DATA_PATH     = null;
 		
 		public static $aDirectories = [
 			'../classes',
@@ -47,7 +47,7 @@
 			}
 			
 			if (!isset($argv[3])) {
-				die('Please supply path to images folder as third parameter' . PHP_EOL);
+				die('Please supply path to USER_DATA folder as third parameter' . PHP_EOL);
 			}
 			
 			if (isset($argv[4])) {
@@ -58,8 +58,8 @@
 			self::$DOCUMENT_ROOT  = realpath($argv[1]);
 			self::$PROJECT_ROOT   = implode('/', array_slice(explode('/', __FILE__), 0, -3));
 			self::$SITE_PATH      = str_replace(self::$DOCUMENT_ROOT, '', self::$PROJECT_ROOT);
-			self::$IMAGES_PATH    = $argv[3];
-			self::$aDirectories[] = self::$IMAGES_PATH;
+			self::$DATA_PATH      = $argv[3];
+			self::$aDirectories[] = self::$DATA_PATH;
 		}
 		
 		public static function createDirectories() {
@@ -75,7 +75,7 @@
 					print ' Exists'.PHP_EOL;
 				}
 			}
-			chmod(self::$IMAGES_PATH, 0777);
+			chmod(self::$DATA_PATH, 0777);
 		}
 	
 		public static function createFiles() {
