@@ -10,7 +10,7 @@ __PHP_BEGIN__
 		'HOST'         => '<?= self::$HOST ?>',
 		'SITE_PATH'    => '<?= self::$SITE_PATH ?>',                                // folder above hostname (if any) in url where project is rooted
 		'PROJECT_ROOT' => '<?= self::$PROJECT_ROOT ?>',  //
-		'IMAGES_PATH'  => '<?= self::$IMAGES_PATH ?>',   // path to user images folder
+		'DATA_PATH'    => '<?= self::$DATA_PATH ?>',     // path to folder where we store hint html
 		
 		'DB_HOST'      => 'localhost',
 		'DB_USER'      => '',
