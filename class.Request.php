@@ -39,6 +39,11 @@
 				if (isset($_REQUEST[$sParamName]) && $_REQUEST[$sParamName]) {
 					$sParam = trim($_REQUEST[$sParamName]);
 					$mParam = json_decode($sParam, true);
+					
+					// Hack for a double encode non–UTF8 parameters
+					if (gettype($mParam) === 'string') {
+						$mParam = json_decode($mParam, true);
+					}
 
 					if (!$mParam && strlen($sParam) > 0 && $sParam != '""') {
 						$mParam = $sParam;

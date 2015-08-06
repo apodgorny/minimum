@@ -8,7 +8,7 @@ __PHP_BEGIN__
 		public function serveError($oException) {
 			$nCode = $oException->getCode() ? $oException->getCode() : '500';
 			print 'HTTP/1.0 ' . $nCode . ': ' . $oException->getMessage();
-			Response::sendError($oException);
+			Response::sendError(get_class($oException), $oException, $nCode);
 		}
 	}
 	
