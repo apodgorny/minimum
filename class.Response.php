@@ -126,7 +126,10 @@
 			}
 		}
 		
-		public static function sendHtml($sHtml, $sScriptToInject=null, $sCssToInject=null, $bEval=true) {
+		public static function sendHtml($sHtml='', $sScriptToInject=null, $sCssToInject=null, $bEval=true) {
+			if ($sHtml == '') {
+				$sHtml = '<!DOCTYPE html><html><head></head><body></body></html>';
+			}
 			if ($sCssToInject) {
 				$sHtml = preg_replace('/<\/head>/i', "\n<style>\n$sCssToInject\n</style>\n</head>", $sHtml);
 			}
@@ -226,11 +229,11 @@
 		}
 		
 		public static function redirectToHttp() {
-			self::redirectTo(M::HTTP_ROOT() . M::request_path());
+			self::redirectTo(M::HTTP_ROOT() . Request::path());
 		}
 
 		public static function redirectToHttps() {
-			self::redirectTo(M::HTTPS_ROOT() . M::request_path());
+			self::redirectTo(M::HTTPS_ROOT() . Request::path());
 		}
 	}
 

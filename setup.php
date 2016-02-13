@@ -1,5 +1,7 @@
 <?php
 
+	// TODO: after settings have been created, grab log file paths from settings and create logs
+
 	class Setup {
 		public static $PRODUCTION    = false;
 		public static $DOCUMENT_ROOT = null;
@@ -17,7 +19,6 @@
 		];
 
 		public static $aFiles = [
-			'log'                   => ['path' => '../logs/log.log',                     'mode' => 0666],
 			'htaccess'              => ['path' => '../../.htaccess',                     'mode' => 0644],
 			'index'                 => ['path' => '../../index.php',                     'mode' => 0644],
 			'gitignore1'            => ['path' => '../../.gitignore',                    'mode' => 0664],

@@ -39,8 +39,8 @@
  * See:  http://www.opensource.org/licenses/bsd-license.php
  */
 
-// require "split_url.php";
-require "join_url.php";
+// require_once "split_url.php";
+require_once "join_url.php";
 
 /**
  * Combine a base URL and a relative URL to produce a new

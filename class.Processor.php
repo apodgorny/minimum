@@ -9,7 +9,7 @@
 			if (eval('?>' . $s) === false) {
 				$_ENV['EVAL_ERROR'] = true;
 				$_ENV['EVALED_CODE'] = $s;
-				file_put_contents(M::PROJECT_ROOT() . '/server/logs/processor.log', $s);
+				// file_put_contents(M::PROJECT_ROOT() . '/server/logs/processor.log', $s);
 			}
 			$sResult = ob_get_contents();
 			ob_end_clean();

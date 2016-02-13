@@ -29,7 +29,21 @@
 	$_ENV['LAST_EVALED_FILE'] = null;
 	$_ENV['EVAL_ERROR']       = false;
 
-	$_ENV['SETTINGS']['LOG_FILE'] = $_ENV['SETTINGS']['PROJECT_ROOT'] . '/' . $_ENV['SETTINGS']['LOG_FILE'];
+	$_ENV['SETTINGS']['FILE_LOG_PHP'] = 
+		$_ENV['SETTINGS']['PROJECT_ROOT'] . '/' .
+		$_ENV['SETTINGS']['PATH_LOGS']    . '/' .
+		$_ENV['SETTINGS']['FILE_LOG_PHP'];
+
+	$_ENV['SETTINGS']['FILE_LOG_PHANTOM'] = 
+		$_ENV['SETTINGS']['PROJECT_ROOT'] . '/' .
+		$_ENV['SETTINGS']['PATH_LOGS']    . '/' .
+		$_ENV['SETTINGS']['FILE_LOG_PHANTOM'];
+
+	$_ENV['SETTINGS']['FILE_LOG_CSS'] = 
+		$_ENV['SETTINGS']['PROJECT_ROOT'] . '/' .
+		$_ENV['SETTINGS']['PATH_LOGS']    . '/' .
+		$_ENV['SETTINGS']['FILE_LOG_CSS'];
+
 	$_ENV['SETTINGS']['PROTOCOL'] = Request::isHttps() ? 'https' : 'http';
 
 	$_ENV['SETTINGS']['HTTP_ROOT'] = 'http://' . $_ENV['SETTINGS']['HOST'] . 
@@ -46,25 +60,15 @@
 		
 	$_ENV['SETTINGS']['AGNOSTIC_ROOT'] = '//' . $_ENV['SETTINGS']['HOST'] . $_ENV['SETTINGS']['SITE_PATH'];
 
-	$_ENV['SETTINGS']['REQUEST_PATH'] = isset($_SERVER['REQUEST_URI'])
-		? explode('?', str_replace_first($_ENV['SETTINGS']['SITE_PATH'], '', $_SERVER['REQUEST_URI']))[0]
-		: '';
+	// $_ENV['SETTINGS']['REQUEST_PATH'] = isset($_SERVER['REQUEST_URI'])
+	// 	? explode('?', str_replace_first($_ENV['SETTINGS']['SITE_PATH'], '', $_SERVER['REQUEST_URI']))[0]
+	// 	: '';
 		
 	$_ENV['SETTINGS']['SITE_ROOT'] = $_ENV['SETTINGS']['PROTOCOL'] == 'https' 
 		? $_ENV['SETTINGS']['HTTPS_ROOT'] 
 		: $_ENV['SETTINGS']['HTTP_ROOT'];
 
 	/********************************************************/
-	
-	function str_replace_first($sNeedle, $sReplacement, $sHaystack) {
-		if ($sNeedle && $sHaystack) {
-			$nPosition = strpos($sHaystack, $sNeedle);
-			if ($nPosition !== false) {
-			    return substr_replace($sHaystack, $sReplacement, $nPosition, strlen($sNeedle));
-			}
-		}
-		return $sHaystack;
-	}
 	
 	function join_paths($sLeft, $sRight) {
 		$aLeft  = explode(DIRECTORY_SEPARATOR, $sLeft);
@@ -127,9 +131,9 @@
 			errorHandler($aError['type'], $aError['message'], $aError['file'], $aError['line']);
 		}
 		// Flush debug
-		$oFile = fopen($_ENV['SETTINGS']['LOG_FILE'], 'a');
-		fwrite($oFile, $_ENV['DEBUG']);
-		fclose($oFile);
+		$oPhpLogFile = fopen($_ENV['SETTINGS']['FILE_LOG_PHP'], 'a');
+		fwrite($oPhpLogFile, $_ENV['DEBUG']);
+		fclose($oPhpLogFile);
 	}
 	
 	function errorHandler($nCode, $sMessage, $sFileName, $nLineNumber) {

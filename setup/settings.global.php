@@ -15,11 +15,10 @@ __PHP_BEGIN__
 		'HTTP_ROOT'     => '',               // Will be set automatically (http://mysite.com)
 		'HTTPS_ROOT'    => '',               // Will be set automatically (https://mysite.com)
 		'SITE_ROOT'     => '',               // Will be set automatically (either http_root or https_root, depending on request protocol)
-		'REQUEST_PATH'  => '',               // Will be set automatically
+//		'REQUEST_PATH'  => '',               // Will be set automatically
 		'PROTOCOL'      => '',               // Will be set automatically
 
 		'INCLUDE_DIRS'  => ['minimum', 'logic', 'services', 'classes'],
-		'LOG_FILE'      => 'server/logs/log.log'
 	];
 
 __PHP_END__

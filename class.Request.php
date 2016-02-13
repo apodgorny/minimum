@@ -3,11 +3,22 @@
 	class Request {
 		
 		private static $_aHeaders = [];
+		private static function _strReplaceFirst($sNeedle, $sReplacement, $sHaystack) {
+			if ($sNeedle && $sHaystack) {
+				$nPosition = strpos($sHaystack, $sNeedle);
+				if ($nPosition !== false) {
+				    return substr_replace($sHaystack, $sReplacement, $nPosition, strlen($sNeedle));
+				}
+			}
+			return $sHaystack;
+		}
 		
 		/******************* PUBLIC *******************/
 
 		public static function path() {
-			return M::REQUEST_PATH();
+			return isset($_SERVER['REQUEST_URI'])
+				? explode('?', self::_strReplaceFirst($_ENV['SETTINGS']['SITE_PATH'], '', $_SERVER['REQUEST_URI']))[0]
+				: '';
 		}
 		
 		public static function getHeader($sHeader) {
@@ -42,13 +53,18 @@
 					
 					// Hack for a double encode non–UTF8 parameters
 					if (gettype($mParam) === 'string') {
-						$mParam = json_decode($mParam, true);
+						$mNewParam = json_decode($mParam, true);
+						// Hack for a hack - will break if values "NULL" or deeply (>512 nested JSON
+						// are double json encoded - rare corner case, see http://php.net/manual/en/function.json-decode.php
+						if ($mNewParam !== null) {
+							$mParam = $mNewParam;
+						}
 					}
 
-					if (!$mParam && strlen($sParam) > 0 && $sParam != '""') {
+					if ($mParam === null && strlen($sParam) > 0 && $sParam != '""') {
 						$mParam = $sParam;
 					}
-					
+
 					if ($bRequired && !$mParam) {
 						throw new Exception("Parameter \"$sParamName\" is empty");
 					}

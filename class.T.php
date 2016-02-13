@@ -59,7 +59,6 @@
 		}
 		
 		public static function getCss() {
-			debug('getCss');
 			$sCss = '';
 			foreach (self::$_aCss as $sTemplate => $sFileName) {
 				$sCss .= "/***** $sTemplate *****/\n" . file_get_contents($sFileName) . "\n";

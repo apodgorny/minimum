@@ -1,7 +1,10 @@
 <?php
 	
+	if (!class_exists('Abs')) {
+		require_once 'lib/simple_html_dom/simple_html_dom.php';
+	}
+
 	require_once 'lib/url_to_absolute/url_to_absolute.php';
-	require_once 'lib/simple_html_dom/simple_html_dom.php';
 
 	class Abs {
 		public static function absolutizeUrl($sBaseUrl, $sUrl) {
